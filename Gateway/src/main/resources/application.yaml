@@ -1,0 +1,26 @@
+server:
+  port: 8088
+
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      routes:
+        - id: RewardsCalc
+          uri: lb://RewardsCalc
+          predicates:
+            - Path=/rewards/**
+        - id: customers
+          uri: http://localhost:8081/
+          predicates:
+            - Path=/customers/**
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
